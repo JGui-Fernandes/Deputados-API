@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Deputados</title>
+</head>
+<body>
+
+<h2>Listagem de Deputados</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Partido</th>
+        <th>UF</th>
+        <th>Foto</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="deputado : ${deputados}">
+        <td th:text="${deputado.nome}"></td>
+        <td th:text="${deputado.siglaPartido}"></td>
+        <td th:text="${deputado.siglaUf}"></td>
+        <td>
+            <img th:src="${deputado.urlFoto}" alt="Foto de ${deputado.nome}" style="width: 50px; height: 50px;">
+        </td>
+        <td>
+            <a th:href="@{{id}(id=${deputado.id})}">Ver Detalhes</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Script para fazer a requisição caso a lista de deputados esteja vazia -->
+<script th:if="${#lists.isEmpty(deputados)}">
+    // Verifica se a lista de deputados está vazia
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://localhost:8080/clone', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Lógica adicional após a requisição bem-sucedida, se necessário
+                alert('Clone realizado com sucesso!');
+                location.reload();
+            } else {
+                alert('Erro ao realizar o clone. Status: ' + xhr.status);
+            }
+        }
+    };
+    xhr.send();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Eventos</title>
+</head>
+<body>
+
+<h1>Listagem de Eventos</h1>
+
+<div th:if="${eventos != null and not #lists.isEmpty(eventos)}">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Descrição</th>
+            <th>Tipo</th>
+            <th>Data</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="evento : ${eventos}">
+            <td th:text="${evento.descricao}"></td>
+            <td th:text="${evento.descricaoTipo}"></td>
+            <td th:text="${evento.data}"></td>
+
+            <td>
+                <a th:id="'deleteButton_' + ${eventos.iterator().next().id}"
+                   class="btn delete-button"
+                   href="#" onclick="deleteDeputadoEvent(this)">Apagar evento</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:if="${eventos == null or #lists.isEmpty(eventos)}">
+    <p>Nenhum evento encontrado para este deputado.</p>
+</div>
+
+<div>
+    <a th:if="${not #lists.isEmpty(eventos)}" th:href="@{'/'}" class="btn">Voltar para a Listagem de Deputados</a>
+    <a th:if="${#lists.isEmpty(eventos)}" th:href="@{'/'}" class="btn">Voltar para a Listagem de Deputados</a>
+
+</div>
+
+</body>
+</html>
+
+<script>
+    function deleteDeputadoEvent(button) {
+        var eventoId = button.id.split('_')[1];  // Extrai o ID do deputado do ID do botão
+
+        var confirmDelete = confirm("Tem certeza que deseja excluir este evento do deputado?");
+
+        if (confirmDelete) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('DELETE', '/eventos/deletar/' + eventoId, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 202) {
+                        alert('Evento excluído com sucesso!');
+                        location.reload();
+                    } else {
+                        alert('Erro ao excluir evento. Status: ' + xhr.status);
+                    }
+                }
+            };
+            xhr.send();
+        }
+    }
+</script>

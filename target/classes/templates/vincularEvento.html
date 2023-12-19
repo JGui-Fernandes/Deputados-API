@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Deputados em Eventos</title>
+</head>
+<body>
+
+<h1>Registro de Deputados em Eventos</h1>
+
+<form th:action="@{/eventos/{id}(id=${deputado.id})}" method="post">
+
+  <label for="eventoId">Selecione um Evento:</label>
+  <select id="eventoId" name="eventoId">
+    <option th:each="evento : ${eventos}" th:value="${evento.id}" th:text="${evento.descricao}"></option>
+  </select>
+  <button type="submit">Registrar</button>
+
+</form>
+
+<div>
+  <a th:href="@{'/'}" class="btn">Voltar para a Listagem de Deputados</a>
+</div>
+
+</body>
+</html>
+

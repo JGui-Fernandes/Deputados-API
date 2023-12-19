@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deputado</title>
+</head>
+<body>
+
+<h1>Detalhes do Deputado</h1>
+
+<div th:if="${deputado != null}">
+    <h2 th:text="${deputado.nome}"></h2>
+    <p><strong>Partido:</strong> <span th:text="${deputado.siglaPartido}"></span></p>
+    <p><strong>UF:</strong> <span th:text="${deputado.siglaUf}"></span></p>
+    <p><strong>ID Legislatura:</strong> <span th:text="${deputado.idLegislatura}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${deputado.email}"></span></p>
+    <img th:src="${deputado.urlFoto}" alt="Foto de ${deputado.nome}" style="width: 150px; height: 150px;">
+</div>
+
+<div>
+    <a th:href="@{/eventos/{id}(id=${deputado.id})}" class="btn">Eventos do deputado</a>
+</div>
+
+<div>
+    <a th:href="@{/listarEventos/{id}(id=${deputado.id})}" class="btn">Adicionar um evento</a>
+</div>
+<div>
+    <a th:href="@{/}" class="btn">Voltar para a Listagem</a>
+</div>
+<div th:if="${deputado == null}">
+    <p>Deputado não encontrado.</p>
+</div>
+
+</body>
+</html>
