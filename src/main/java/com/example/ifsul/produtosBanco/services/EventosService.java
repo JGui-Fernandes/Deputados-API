@@ -56,11 +56,6 @@ public class EventosService {
             mudou = true;
         }
 
-//        if (dados.dataHoraInicio() != null && !dados.dataHoraInicio().equals(evento.getDataHoraInicio())) {
-//            evento.setDataHoraInicio(dados.dataHoraInicio());
-//            mudou = true;
-//        }
-
         if (dados.situacao() != null && !dados.situacao().equals(evento.getSituacao())) {
             evento.setSituacao(dados.situacao());
             mudou = true;
